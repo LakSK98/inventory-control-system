@@ -10,7 +10,9 @@ namespace InventoryControlSystem
         {
             CreateMap<ProductCategory, ProductCategoryDTO>();
             CreateMap<ProductCategoryDTO, ProductCategory>();
-            CreateMap<Product, ProductDTO>();
+            CreateMap<Product, ProductDTO>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.CategoryName : null))
+                .ForSourceMember(src => src.Category, opt => opt.DoNotValidate());
             CreateMap<ProductDTO, Product>();
         }
     }
